@@ -1,1 +1,1 @@
-# PrismAI: Advancing Speech Large Language Models with Complex Instructions Synthesized via *RevEval-Instruct*
+# PrismAI: Advancing Speech Large Language Models with Complex Instructions Synthesized via *Revol-Instruct*
