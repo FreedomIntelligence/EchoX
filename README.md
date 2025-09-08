@@ -57,8 +57,8 @@ The integration of both speech and semantic learning ensures that EchoX can pres
 
 ## Performance
 
-<div style="text-align: center;">
-  <img src="asset/performance.png" alt="alt text" style="width:50%;">
+<p align="center">
+  <img src="asset/performance.png" alt="Performance" style="width:50%;">
 </div>
 <!-- <img src="asset/performance.png" alt="alt text" style="width:50%;"> -->
 <!-- ![Figure 3: Model comparison on the knowledge QA benchmark.](asset/performance.png) -->
