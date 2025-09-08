@@ -1,10 +1,5 @@
 # EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-brightgreen)](#environment-setup)
-[![Framework](https://img.shields.io/badge/PyTorch-v1.10-orange)](#environment-setup)
-[![Status](https://img.shields.io/badge/Status-WIP-yellow)]()
-
 > **EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs**  
 > Yuhao Zhang, Yuhao Du, Zhanchen Dai, et al. — *Under review at ICLR 2026*  
 > 📄 [Paper (to be added)](https://arxiv.org/abs/XXXX.XXXX)
