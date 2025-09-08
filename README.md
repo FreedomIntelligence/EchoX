@@ -9,8 +9,6 @@
 > Yuhao Zhang, Yuhao Du, Zhanchen Dai, et al. — *Under review at ICLR 2026*  
 > 📄 [Paper (to be added)](https://arxiv.org/abs/XXXX.XXXX)
 
----
-
 ## Table of Contents
 - [EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs](#echox-towards-mitigating-acoustic-semantic-gap-via-echo-training-for-speech-to-speech-llms)
   - [Table of Contents](#table-of-contents)
@@ -28,8 +26,6 @@
   - [Citation](#citation)
   - [License](#license)
 
----
-
 ## Highlights
 
 ![Figure 1: The training difference between three types of models.](asset/problem_figure.png)
@@ -38,8 +34,6 @@
 - **Solution**: EchoX integrates both acoustic and semantic learning by dynamically generating speech tokens from semantic representations. This mitigates the degradation problem, preserving the reasoning abilities of LLMs.
 - **Impact**: EchoX achieves state-of-the-art performance on knowledge-based question-answering tasks while reducing data requirements to just 10,000 hours of training data.
 - **Performance**: EchoX outperforms existing models in various benchmarks, delivering superior performance with a more efficient training setup.
-
----
 
 ## Method Overview
 
@@ -53,8 +47,6 @@ EchoX integrates both semantic and acoustic learning to address the challenges o
 
 The integration of both speech and semantic learning ensures that EchoX can preserve the reasoning abilities of LLMs while improving speech-based tasks.
 
----
-
 ## Performance
 
 <p align="center">
@@ -64,8 +56,6 @@ The integration of both speech and semantic learning ensures that EchoX can pres
 <!-- ![Figure 3: Model comparison on the knowledge QA benchmark.](asset/performance.png) -->
 
 EchoX has demonstrated exceptional performance in knowledge-based question-answering tasks. The model achieves superior results with minimal training data, setting a new benchmark for efficiency.
-
----
 
 ## Datasets and Models
 
@@ -86,8 +76,6 @@ The following pre-trained models are available for download:
 | **EchoX-3B** | 3 billion  | 10K hours       | [EchoX-3B Model](https://huggingface.co/FreedomIntelligence/EchoX-3B) |
 | **EchoX-8B** | 8 billion  | 10K hours       | [EchoX-8B Model](https://huggingface.co/FreedomIntelligence/EchoX-8B) |
 
----
-
 ## Quickstart
 
 ### Environment Setup
@@ -99,7 +87,6 @@ conda create -n echox python=3.10 pip=24.0
 conda activate echox
 pip install -r requirements.txt
 ```
-
 
 ### Model Download
 
@@ -127,8 +114,6 @@ You can assign the GPU with the following command:
 CUDA_VISIBLE_DEVICES=1 python app.py
 ```
 
----
-
 ## Acknowledgments
 
 Special thanks to Hugging Face for providing models, datasets, and space hosting services. You can access [this Hugging Face Space](https://huggingface.co/spaces/FreedomIntelligence/EchoX) to experience our hands-on demo—no installation required, ready to use out of the box.
@@ -148,8 +133,6 @@ If you use EchoX in your research or projects, please cite our paper:
   url={https://arxiv.org/abs/XXXX.XXXX}
 }
 ```
-
----
 
 ## License
 
