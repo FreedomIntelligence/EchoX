@@ -34,7 +34,7 @@ if __name__ == "__main__":
                 yield None, accumulated_text
 
     examples = [
-        ["Provide a consise answer.", "./samples/1.wav"],
+        ["Recognize what the voice said and respond to it.", "./samples/1.wav"],
         ["", "./samples/2.wav"],
     ]
 
@@ -53,4 +53,4 @@ if __name__ == "__main__":
         allow_flagging="never"
     )
 
-    iface.launch(server_name="0.0.0.0", server_port=10124)
+    iface.launch(server_name="0.0.0.0", server_port=7860)

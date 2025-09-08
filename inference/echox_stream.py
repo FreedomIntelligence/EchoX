@@ -66,8 +66,8 @@ def load_model(args, device):
     return model, audio_processor, tokenizer, unit_translator
 
 def load_speech_model(device):
-    vocoder = "./EchoX-Vocoder/g_00500000"
-    vocoder_cfg = "./EchoX-Vocoder/config.json"
+    vocoder = "./EchoX-8B/g_00500000"
+    vocoder_cfg = "./EchoX-8B/vocoder_config.json"
     voc_cfg = get_vocoder_config(vocoder, vocoder_cfg)
     vocoder = load_units_vocoder(voc_cfg, device)
     return vocoder, voc_cfg
