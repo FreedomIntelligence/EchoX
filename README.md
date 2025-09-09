@@ -1,12 +1,20 @@
 # EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs
 
-> **EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs**  
+<!-- > **EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs**  
 > Yuhao Zhang, Yuhao Du, Zhanchen Dai, et al. — *Under review at ICLR 2026*  
-> 📄 [Paper (to be added)](https://arxiv.org/abs/XXXX.XXXX)
+> 📄 [Paper (to be added)](https://arxiv.org/abs/XXXX.XXXX) -->
 
-## Table of Contents
+<p align="center">
+   <a href="https://arxiv.org/abs/XXXX.XXXX">📄 Paper</a> |
+   📦 Model Weights <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B">8B</a> <a href="https://huggingface.co/FreedomIntelligence/EchoX-3B">3B</a> |
+  <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX">🚀 HF Space</a> |
+  <a href="https://freedomintelligence.github.io/EchoX">🌐 Web Demo</a>
+</p>
+
+
+## Contents
 - [EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs](#echox-towards-mitigating-acoustic-semantic-gap-via-echo-training-for-speech-to-speech-llms)
-  - [Table of Contents](#table-of-contents)
+  - [Contents](#contents)
   - [Highlights](#highlights)
   - [Method Overview](#method-overview)
   - [Performance](#performance)
@@ -17,22 +25,25 @@
     - [Environment Setup](#environment-setup)
     - [Model Download](#model-download)
     - [Inference](#inference)
-  - [Acknowledgments](#acknowledgments)
   - [Citation](#citation)
   - [License](#license)
 
 ## Highlights
 
-![Figure 1: The training difference between three types of models.](asset/problem_figure.png)
+<p align="center">
+  <img src="asset/problem_figure.png" alt="Problem" style="width:90%;">
+</div>
 
 - **Problem**: Current speech-to-speech large language models (SLLMs) suffer from degraded reasoning and knowledge due to the conflicting focus on acoustic learning.
 - **Solution**: EchoX integrates both acoustic and semantic learning by dynamically generating speech tokens from semantic representations. This mitigates the degradation problem, preserving the reasoning abilities of LLMs.
-- **Impact**: EchoX achieves state-of-the-art performance on knowledge-based question-answering tasks while reducing data requirements to just 10,000 hours of training data.
+- **Impact**: EchoX achieves state-of-the-art performance on knowledge-based question-answering tasks while reducing data requirements to just 10k hours of training data.
 - **Performance**: EchoX outperforms existing models in various benchmarks, delivering superior performance with a more efficient training setup.
 
 ## Method Overview
 
-![Figure 1: The training difference between three types of models.](asset/method.png)
+<p align="center">
+  <img src="asset/method.png" alt="Method" style="width:80%;">
+</div>
 
 EchoX integrates both semantic and acoustic learning to address the challenges of current speech-to-speech models. We propose a novel three-stage training pipeline:
 
@@ -47,8 +58,6 @@ The integration of both speech and semantic learning ensures that EchoX can pres
 <p align="center">
   <img src="asset/performance.png" alt="Performance" style="width:50%;">
 </div>
-<!-- <img src="asset/performance.png" alt="alt text" style="width:50%;"> -->
-<!-- ![Figure 3: Model comparison on the knowledge QA benchmark.](asset/performance.png) -->
 
 EchoX has demonstrated exceptional performance in knowledge-based question-answering tasks. The model achieves superior results with minimal training data, setting a new benchmark for efficiency.
 
@@ -57,7 +66,7 @@ EchoX has demonstrated exceptional performance in knowledge-based question-answe
 ### Dataset
 EchoX is trained on carefully curated datasets for each stage of the pipeline, ensuring optimal performance across S2T, T2C, and S2S tasks. The datasets used are as follows:
 
-| Dataset Type           | Description                                                              | Size                   | Download Link                                      |
+| Dataset Type           | Description                                                              | Duration                   | Download Link                                      |
 | ---------------------- | ------------------------------------------------------------------------ | ---------------------- | -------------------------------------------------- |
 | **Speech-to-Text (S2T)** | Multi-turn dialog datasets processed for speech-to-text tasks             | 810 hours              | [Link to S2T Dataset](https://huggingface.co/datasets/FreedomIntelligence/EchoX-Dataset) |
 | **Text-to-Codec (T2C)** | Text-to-speech data with paired codec tokens                              | 40 hours               | [Link to T2C Dataset](https://huggingface.co/datasets/FreedomIntelligence/EchoX-Dataset) |
@@ -66,10 +75,10 @@ EchoX is trained on carefully curated datasets for each stage of the pipeline, e
 ### Model
 The following pre-trained models are available for download:
 
-| Model     | Parameters | Training Data   | Download Link                                      |
+| Model     | Parameters | Training Data Duration   | Download Link                                      |
 | --------- | ---------- | --------------- | -------------------------------------------------- |
-| **EchoX-3B** | 3 billion  | 10K hours       | [EchoX-3B Model](https://huggingface.co/FreedomIntelligence/EchoX-3B) |
-| **EchoX-8B** | 8 billion  | 10K hours       | [EchoX-8B Model](https://huggingface.co/FreedomIntelligence/EchoX-8B) |
+| **EchoX-3B** | 3 billion  | 10k hours       | [EchoX-3B Model](https://huggingface.co/FreedomIntelligence/EchoX-3B) |
+| **EchoX-8B** | 8 billion  | 10k hours       | [EchoX-8B Model](https://huggingface.co/FreedomIntelligence/EchoX-8B) |
 
 ## Quickstart
 
@@ -84,16 +93,17 @@ pip install -r requirements.txt
 ```
 
 ### Model Download
-
-Download the models with the following command:
+Download the models in this repo directory with the following command:
 
 ```bash
-huggingface-cli download --resume-download FreedomIntelligence/EchoX-8B --local-dir EchoX-8B
-huggingface-cli download --resume-download openai/whisper-large-v3 --local-dir whisper-large-v3
+pip install -U huggingface_hub
+hf download --resume-download FreedomIntelligence/EchoX-8B --local-dir EchoX-8B
+hf download --resume-download openai/whisper-large-v3 --local-dir whisper-large-v3
 ```
 
-### Inference
+If they are downloaded elsewhere, directories in [inference/echox_stream.py](inference/echox_stream.py) of this two models should be modified.
 
+### Inference
 Run inference on a test case with the following command:
 ```bash
 python demo.py
@@ -104,19 +114,12 @@ Or you can start Gradio web page with the following command:
 python app.py
 ```
 
-You can assign the GPU with the following command:
+You can assign the specific GPU with the following command:
 ```bash
 CUDA_VISIBLE_DEVICES=1 python app.py
 ```
 
-## Acknowledgments
-
-Special thanks to Hugging Face for providing models, datasets, and space hosting services. You can access [this Hugging Face Space](https://huggingface.co/spaces/FreedomIntelligence/EchoX) to experience our hands-on demo—no installation required, ready to use out of the box.
-
----
-
 ## Citation
-
 If you use EchoX in your research or projects, please cite our paper:
 
 ```bibtex
@@ -130,5 +133,4 @@ If you use EchoX in your research or projects, please cite our paper:
 ```
 
 ## License
-
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
