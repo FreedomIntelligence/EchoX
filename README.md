@@ -11,18 +11,18 @@
 </p>
 
 <p align="center">
-   <a href="https://arxiv.org/abs/XXXX.XXXX">📄 Paper</a> |
-   📦 Model Weights <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B">8B</a> <a href="https://huggingface.co/FreedomIntelligence/EchoX-3B">3B</a> |
-  <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX">🚀 HF Space</a> |
-  <a href="https://freedomintelligence.github.io/EchoX">🌐 Web Demo</a>
+   📄 <a href="https://arxiv.org/abs/XXXX.XXXX">Paper</a> |
+   📦 <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B">Model</a> | 🚀 
+  <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX"> HF Space</a> | 🌐 
+  <a href="https://freedomintelligence.github.io/EchoX">Web Demo</a>
 </p>
 
 
 ## Contents
 - [EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs](#echox-towards-mitigating-acoustic-semantic-gap-via-echo-training-for-speech-to-speech-llms)
   - [Contents](#contents)
-  - [Highlights](#highlights)
-  - [Method Overview](#method-overview)
+  - [Overview](#overview)
+  - [Method](#method)
   - [Performance](#performance)
   - [Datasets and Models](#datasets-and-models)
     - [Dataset](#dataset)
@@ -34,18 +34,20 @@
   - [Citation](#citation)
   - [License](#license)
 
-## Highlights
+## Overview
 
 <p align="center">
   <img src="asset/problem_figure.png" alt="Problem" style="width:90%;">
 </p>
 
-- **Problem**: Current speech-to-speech large language models (SLLMs) suffer from degraded reasoning and knowledge capabilities due to the conflicting focus on acoustic learning.
-- **Solution**: EchoX integrates both acoustic and semantic learning by dynamically generating speech tokens from semantic representations, mitigating the degradation problem while preserving the reasoning abilities of LLMs.
-- **Impact**: EchoX achieves state-of-the-art performance on knowledge-based question-answering tasks while requiring only 10k hours of training data.
-- **Performance**: EchoX outperforms existing models across various benchmarks, delivering superior performance with a more efficient training setup.
+Current speech-to-speech language models face a fundamental challenge: while traditional LLMs excel at semantic alignment (aligning "Hello" and "Hi"), speech LLMs suffer from poor semantic understanding due to their focus on acoustic modeling. EchoX addresses this acoustic-semantic gap through a novel echo training approach that preserves both reasoning capabilities and speech generation quality.
 
-## Method Overview
+**Key Contributions:**
+- **Problem Identification**: Reveals the degraded reasoning and knowledge abilities in current speech LLMs due to conflicting acoustic learning demands.
+- **Echo Training Solution**: Integrates both acoustic and semantic learning by dynamically generating speech tokens from semantic representations, mitigating the degradation problem while preserving the reasoning abilities of LLMs.
+- **Efficient Performance**: Achieves state-of-the-art performance on knowledge-based question-answering tasks while requiring only 10k hours of training data.
+
+## Method
 
 <p align="center">
   <img src="asset/method.png" alt="Method" style="width:80%;">
@@ -70,13 +72,18 @@ EchoX demonstrates exceptional performance on knowledge-based question-answering
 ## Datasets and Models
 
 ### Dataset
-EchoX is trained on carefully curated datasets for each stage of the pipeline, ensuring optimal performance across S2T, T2C, and S2S tasks. The datasets used are as follows:
+EchoX is trained on carefully curated datasets for each stage of the pipeline, ensuring optimal performance across ASR, TTS, and SQA tasks. The datasets used are as follows:
 
-| Dataset Type              | Description                                                                 | Duration  | Download Link                                      |
-| ------------------------- | --------------------------------------------------------------------------- | --------- | -------------------------------------------------- |
-| **Speech-to-Text (S2T)**  | Multi-turn dialog datasets processed for speech-to-text tasks              | 810 hours | [Link to S2T Dataset](https://huggingface.co/datasets/FreedomIntelligence/EchoX-Dataset) |
-| **Text-to-Codec (T2C)**   | Text-to-speech data with paired codec tokens                               | 40 hours  | [Link to T2C Dataset](https://huggingface.co/datasets/FreedomIntelligence/EchoX-Dataset) |
-| **Speech-to-Speech (S2S)** | Conversational and reasoning-based speech datasets for response generation | 150 hours | [Link to S2S Dataset](https://huggingface.co/datasets/FreedomIntelligence/EchoX-Dataset) |
+| Task      | Data                | Size        | Duration(H) | Stage  | Download                                                                    |
+| :-------- | :------------------ | :---------- | :---------- | :----- | :-------------------------------------------------------------------------- |
+| ASR       | LibriSpeech         | 281,241     | 960         | I      | -                                                                           |
+| ASR       | MLS                 | 723,636     | 3,000       | I      | -                                                                           |
+| TTS       | AudioQA-1M          | 178,576     | 989         | II     | -                                                                           |
+| TTS       | SpeechInstruct      | 31,563      | 84          | II     | -                                                                           |
+| TTS       | HH-RLHF-Speech      | 124,945     | 656         | II     | -                                                                           |
+| SQA       | sharechatx          | 43,223      | 178         | I, III | [Link](https://huggingface.co/datasets/KurtDu/EchoX-Dialogues) |
+| SQA       | Magpie-Pro-Speech+   | 117,000     | 327         | I, III | [Link](https://huggingface.co/datasets/KurtDu/EchoX-Dialogues) |
+| **Total** |                     | **1,500,184** | **6,194**   |        |                                                                             |
 
 ### Model
 The following pre-trained models are available for download:
