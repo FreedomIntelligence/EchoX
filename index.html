@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors a {
+      color: hsl(204, 86%, 53%) !important;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+    }
+
+    .eql-cntrb {
+      font-size: smaller;
+    }
+
+    /* Custom Carousel Styles */
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 500px;
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .carousel-item figure {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Navigation buttons */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .carousel-nav-left {
+      left: 80px;
+    }
+
+    .carousel-nav-right {
+      right: 80px;
+    }
+
+    /* Pagination dots */
+    .carousel-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: #3273dc;
+    }
+
+    .key-findings li {
+      margin-bottom: 1rem;
+      padding: 0.5rem 0;
+    }
+
+    /* Audio Demos Styles */
+    .audio-demo-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .audio-demo-card .card-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .audio-demo-card .card-header-title {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .audio-demo-card .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .audio-item {
+      background: #ffffff;
+      border: 1px solid #e1e5e9;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .audio-item-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #495057;
+    }
+
+    .audio-controls {
+      width: 100%;
+      margin-bottom: 0.75rem;
+    }
+
+    .transcript-container {
+      position: relative;
+      height: 160px;
+      /* 默认高度保持不变 */
+      overflow: hidden;
+      border-radius: 6px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+    }
+
+    /* 为Speech Input设置较小的高度 */
+    .audio-item:first-child .transcript-container {
+      height: 100px;
+    }
+
+    /* 为EchoX Response设置较大的高度 */
+    .audio-item:last-child .transcript-container {
+      height: 240px;
+    }
+
+    .transcript-content {
+      height: 100%;
+      overflow-y: auto;
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: #495057;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .transcript-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .transcript-container::before,
+    .transcript-container::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .transcript-container::before {
+      top: 0;
+      background: linear-gradient(to bottom, #f8f9fa, transparent);
+    }
+
+    .transcript-container::after {
+      bottom: 0;
+      background: linear-gradient(to top, #f8f9fa, transparent);
+    }
+
+    /* Approach carousel specific styling */
+    .approach-carousel-container {
+      height: 600px;
+    }
+
+    .approach-carousel-item .card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .approach-carousel-item .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+    }
+
+    .approach-carousel-item figure {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .approach-carousel-item figure img {
+      width: 100%;
+      height: auto;
+      max-height: 450px;
+      object-fit: contain;
+    }
+
+    /* Performance carousel specific styling */
+    .performance-carousel-container {
+      height: 600px;
+    }
+
+    .performance-carousel-item .card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .performance-carousel-item .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+    }
+
+    .performance-carousel-item figure {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .performance-carousel-item figure img {
+      width: 100%;
+      height: auto;
+      max-height: 450px;
+      object-fit: contain;
+    }
+
+    .figure-caption,
+    .image-caption {
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      width: 100%;
+    }
+
+    /* Reduce section spacing */
+    .section {
+      padding: 2rem 1.5rem;
+    }
+
+    .hero.is-small .hero-body {
+      padding: 1.5rem 1.5rem;
+    }
+
+    /* Compact spacing for findings sections */
+    #approach-analysis .content,
+    #performance-analysis .content,
+    #meta-evaluation .content {
+      line-height: 1.5;
+    }
+
+    #approach-analysis .content h5,
+    #performance-analysis .content h5 {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    #approach-analysis .content h5:first-of-type,
+    #performance-analysis .content h5:first-of-type {
+      margin-top: 1rem;
+    }
+
+    #approach-analysis .key-findings,
+    #performance-analysis .key-findings,
+    #meta-evaluation .key-findings {
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #approach-analysis .key-findings li,
+    #performance-analysis .key-findings li,
+    #meta-evaluation .key-findings li {
+      margin-bottom: 0.5rem;
+      padding: 0.2rem 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training
+              for Speech-to-Speech LLMs</h1>
+            <div class="is-size-5 publication-authors" style="margin-top: 1em;">
+              Yuhao Zhang&nbsp;&nbsp;
+              Yuhao Du&nbsp;&nbsp;
+              Zhanchen Dai&nbsp;&nbsp;
+              Xiangnan Ma<br>
+              Kaiqi Kou&nbsp;&nbsp;
+              Benyou Wang<sup>*</sup>&nbsp;&nbsp;
+              Haizhou Li
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                School of Data Science, The Chinese University of Hong Kong, Shenzhen
+              </span><br>
+              <a href="https://github.com/FreedomIntelligence/EchoX" target="_blank">
+                https://github.com/FreedomIntelligence/EchoX
+              </a>
+            </div>
+
+            <div class="is-size-6 eql-cntrb" style="margin-top: 0.5em;">
+              <small>
+                <sup>*</sup> Corresponding author.
+              </small>
+            </div>
+
+            <div align="center" style="margin-top: 1.0em;">
+              <img src="https://img.shields.io/badge/License-Apache2.0-blue.svg" alt="License">
+              <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python">
+              <img src="https://img.shields.io/badge/Model-8B%7C3B-orange.svg" alt="Model Size">
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/FreedomIntelligence/EchoX" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span>📦 Model</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/KurtDu/EchoX-Dialogues" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span>📊 Data</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span>🚀 Space</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Speech-to-speech large language models (SLLMs) are increasingly attracting widespread attention. Augmented
+              from text-based large language models (LLMs), SLLMs often exhibit degradation in knowledge and reasoning
+              capabilities. We hypothesize that this is due to the fact that current training paradigms for SLLMs didn't
+              bridge the Acoustic-Semantic gap in the feature representation space. To address this, we propose EchoX,
+              which adheres to semantic representations and dynamically generates speech training target. This approach
+              integrates both acoustic and semantic learning, thereby EchoX can preserve the strong reasoning ability as
+              a speech LLM. Experimental methods demonstrate that EchoX, with only ten thousand hours of training data,
+              achieves advanced performance on multiple knowledge question-answering benchmarks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Overview</h2>
+
+      <!-- Problem Figure -->
+      <section class="hero is-small" id="problem-overview">
+        <div class="hero-body">
+          <div class="carousel-item">
+            <figure class="image">
+              <img src="asset/problem_figure.png" alt="Framework overview" loading="lazy">
+              <figcaption class="figure-caption">
+                Comparison of training strategies for different models.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Overview Content -->
+      <div class="columns is-variable is-6 is-multiline">
+        <div class="column is-12">
+          <div class="content has-text-justified">
+            <p>
+              Current speech-to-speech language models face a fundamental challenge: while traditional LLMs excel
+              at semantic alignment (aligning "Hello" and "Hi"), speech LLMs suffer from poor semantic understanding
+              due to their focus on acoustic modeling. EchoX addresses this acoustic-semantic gap through a novel
+              echo training approach that preserves both reasoning capabilities and speech generation quality.
+            </p>
+
+            <p>
+              <strong>Key Contributions:</strong>
+            <ul>
+              <li>
+                <strong>Problem Identification</strong>: Reveals the degraded reasoning and knowledge abilities in
+                current speech LLMs due to conflicting acoustic learning demands.
+              </li>
+              <li>
+                <strong>Echo Training Solution</strong>: Integrates both acoustic and semantic learning by dynamically
+                generating speech tokens from semantic representations, mitigating the degradation problem while
+                preserving the reasoning abilities of LLMs.
+              </li>
+              <li>
+                <strong>Efficient Performance</strong>: Achieves state-of-the-art performance on knowledge-based
+                question-answering tasks while requiring only 10k hours of training data.
+              </li>
+            </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audio Demos -->
+  <section class="section" id="audio-demos">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Audio Demos</h2>
+
+      <div class="columns is-multiline is-variable is-4">
+        <!-- Daily Conversation -->
+        <div class="column is-half-tablet is-half-desktop">
+          <div class="card audio-demo-card">
+            <header class="card-header">
+              <p class="card-header-title">Daily Conversation</p>
+            </header>
+            <div class="card-content">
+              <div class="audio-item">
+                <div class="audio-item-title">Speech Input</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/conversation-user.mp3" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    I'm just planning to go on a trip to London.
+                  </div>
+                </div>
+              </div>
+              <div class="audio-item">
+                <div class="audio-item-title">EchoX Response</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/conversation-echox.wav" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    That sounds like a great idea! London is a fantastic city with so much to see and do. What are you
+                    most looking forward to?
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reasoning -->
+        <div class="column is-half-tablet is-half-desktop">
+          <div class="card audio-demo-card">
+            <header class="card-header">
+              <p class="card-header-title">Reasoning</p>
+            </header>
+            <div class="card-content">
+              <div class="audio-item">
+                <div class="audio-item-title">Speech Input</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/reasoning-user.mp3" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    Sarah has a bag with 5 red marbles and 3 blue marbles. She gives 2 red marbles to her friend Tom.
+                    Then her friend Lisa gives Sarah 1 blue marble. How many marbles does Sarah have now, and what
+                    colors are they?
+                  </div>
+                </div>
+              </div>
+              <div class="audio-item">
+                <div class="audio-item-title">EchoX Response</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/reasoning-echox.wav" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    To figure out how many marbles Sarah has now, we need to add the marbles she already had to the ones
+                    she got from Tom and Lisa. Sarah started with five red marbles and three blue marbles. She gave two
+                    red marbles to Tom, so she has five minus two, which is three red marbles left. Then Lisa gave her
+                    one blue marble, so she now has three plus one, which is four blue marbles. So, Sarah has a total of
+                    three red marbles and four blue marbles, making a total of seven marbles. The colors of the marbles
+                    are red and blue.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Telling -->
+        <div class="column is-half-tablet is-half-desktop">
+          <div class="card audio-demo-card">
+            <header class="card-header">
+              <p class="card-header-title">Story Telling</p>
+            </header>
+            <div class="card-content">
+              <div class="audio-item">
+                <div class="audio-item-title">Speech Input</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/storytelling-user.mp3" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    Tell me the Cinderella story.
+                  </div>
+                </div>
+              </div>
+              <div class="audio-item">
+                <div class="audio-item-title">EchoX Response</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/storytelling-echox.wav" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    The Cinderella story is a classic fairy tale about a young woman named Cinderella who faces a series
+                    of challenges and ultimately finds true love with a prince. Here's how the story goes: Once upon a
+                    time, there was a beautiful and kind girl named Cinderella. She lived with her wicked stepmother and
+                    two stepsisters, who treated her poorly and made her do all the household chores. Cinderella's
+                    father had passed away, and her stepmother and stepsisters had taken over the family's estate.
+                    Despite her hardships, Cinderella remained a sweet and gentle soul, always looking out for others
+                    and never losing hope. One day, the king invited all the young women in the kingdom to a grand ball,
+                    where the prince would choose his bride. Cinderella's stepsisters were excited to attend, but
+                    Cinderella was not allowed to go. Her stepmother and stepsisters were cruel to her, making her stay
+                    home and do all the cleaning and cooking. However, Cinderella's fairy godmother appeared and helped
+                    her get ready for the ball. The fairy godmother turned a pumpkin into a beautiful carriage, mice
+                    into horses, and a rat into a coachman. She also gave Cinderella a beautiful gown and off she went
+                    to the ball. At the ball, Cinderella danced with the prince and they fell deeply in love. But when
+                    the clock struck midnight, Cinderella had to leave in a hurry, leaving behind one of her glass
+                    slippers. The prince searched everywhere for the girl whose foot fit the slipper, but none of the
+                    other women could fit it. Finally, he came to Cinderella's house and tried the slipper on her foot.
+                    It fit perfectly, and the prince was overjoyed to have found his true love. They got married and
+                    lived happily ever after. The story of Cinderella has been retold and adapted in many ways over the
+                    years, but the core message remains the same: kindness, hard work, and true love can overcome even
+                    the greatest challenges.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question Answering -->
+        <div class="column is-half-tablet is-half-desktop">
+          <div class="card audio-demo-card">
+            <header class="card-header">
+              <p class="card-header-title">Question Answering</p>
+            </header>
+            <div class="card-content">
+              <div class="audio-item">
+                <div class="audio-item-title">Speech Input</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/qa-user.mp3" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    Could you give me a quick rundown of that attention is all you need paper?
+                  </div>
+                </div>
+              </div>
+              <div class="audio-item">
+                <div class="audio-item-title">EchoX Response</div>
+                <audio class="audio-controls" controls>
+                  <source src="asset/qa-echox.wav" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="transcript-container">
+                  <div class="transcript-content">
+                    The Attention is All You Need paper is a research paper published in two thousand seventeen by
+                    Vaswani and others. It introduced the Transformer model, which is a type of neural network
+                    architecture that has become very popular in natural language processing tasks. The paper proposed a
+                    new way to process sequential data, like text, using self-attention mechanisms instead of
+                    traditional recurrent neural networks. The Transformer model uses self-attention to weigh the
+                    importance of different parts of the input sequence, allowing it to focus on the most relevant
+                    information. This approach has several advantages, including: One, parallelization: The Transformer
+                    model can process the entire input sequence in parallel, which makes it much faster than traditional
+                    recurrent neural networks. Two, flexibility: The self-attention mechanism can be applied to any type
+                    of sequential data, not just text. Three, interpretability: The attention weights can be used to
+                    understand which parts of the input sequence are most important for the model's predictions. The
+                    paper introduced several key components of the Transformer model, including: One, self-attention: A
+                    mechanism that allows the model to weigh the importance of different parts of the input sequence.
+                    Two, encoder-decoder architecture: A two-stage architecture where the encoder processes the input
+                    sequence and the decoder generates the output sequence. Three, position-wise fully connected
+                    feed-forward network: A fully connected feed-forward network that is applied to each position in the
+                    input sequence. The Attention is All You Need paper has had a significant impact on the field of
+                    natural language processing, and the Transformer model has become a widely used architecture for
+                    many tasks, including machine translation, text classification, and question answering.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="approach-analysis">
+    <div class="container is-max-desktop">
+      <div class="content has-text-justified">
+        You're welcome to experience EchoX yourself in our <a
+          href="https://huggingface.co/spaces/FreedomIntelligence/EchoX" target="_blank">Hugging Face Space</a>.
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Analysis -->
+  <section class="hero is-small" id="approach-overview">
+    <div class="hero-body">
+      <h2 class="title is-3 has-text-centered">Approach</h2>
+      <div class="container">
+        <div class="carousel-container approach-carousel-container">
+
+          <div class="carousel-wrapper" id="approach-carousel-wrapper">
+
+            <!-- Slide: Overall training approach -->
+            <div class="carousel-item approach-carousel-item">
+              <div class="card" style="border-radius:16px;">
+                <div class="card-content">
+                  <figure class="image">
+                    <img src="asset/method.png" alt="Overall training approach">
+                    <figcaption class="figure-caption">
+                      The three training stages of EchoX.
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide: Stream inference -->
+            <div class="carousel-item approach-carousel-item">
+              <div class="card" style="border-radius:16px;">
+                <div class="card-content">
+                  <figure class="image">
+                    <img src="asset/stream_inference.png" alt="Streaming inference process">
+                    <figcaption class="figure-caption">
+                      Streaming inference process for real-time speech generation.
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <button class="carousel-nav carousel-nav-left" id="approach-prev" aria-label="Previous approach">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <button class="carousel-nav carousel-nav-right" id="approach-next" aria-label="Next approach">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Pagination -->
+        <div class="carousel-pagination" id="approach-pagination" aria-label="Approach pagination">
+          <span class="carousel-dot active" data-slide="0"></span>
+          <span class="carousel-dot" data-slide="1"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach: Training and Inference -->
+  <section class="section" id="approach-analysis">
+    <div class="container is-max-desktop">
+      <div class="content has-text-justified">
+        EchoX addresses the challenges of current speech-to-speech models through a comprehensive approach that
+        integrates both training and inference innovations. Our approach consists of two main components:
+
+        <h5><strong>Training Pipeline</strong></h5>
+        We propose a novel three-stage training pipeline:
+        <ul class="key-findings">
+          <li><strong>Stage I: Speech-to-Text</strong>: Converts speech to text, enabling the model to capture
+            semantic information from spoken inputs.
+          </li>
+          <li><strong>Stage II: Text-to-Codec</strong>: Transforms text into speech tokens, bridging the gap
+            between text and speech representations.
+          </li>
+          <li><strong>Stage III: Echo Training</strong>: Combines the outputs of previous stages, training the model
+            to generate speech from semantic understanding while preserving core language intelligence.
+          </li>
+        </ul>
+
+        <h5><strong>Streaming Inference</strong></h5>
+        Given that speech sequences are significantly longer than text, streaming generation becomes essential:
+        <ul class="key-findings">
+          <li><strong>Semantic Completeness</strong>: Maintains semantic completeness of each segment to avoid
+            disjointed speech output.
+          </li>
+          <li><strong>Trigger Mechanism</strong>: Determine optimal speech generation timing based on cosine similarity
+            of semantic representation.
+          </li>
+        </ul>
+
+        This integrated approach ensures that EchoX preserves the reasoning abilities of LLMs while excelling at
+        speech-based tasks with real-time capabilities.
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance Analysis -->
+  <section class="hero is-small" id="performance-overview">
+    <div class="hero-body">
+      <h2 class="title is-3 has-text-centered">Performance</h2>
+      <div class="container">
+        <div class="carousel-container performance-carousel-container">
+
+          <div class="carousel-wrapper" id="performance-carousel-wrapper">
+
+            <!-- Slide: Benchmarking results -->
+            <div class="carousel-item performance-carousel-item">
+              <div class="card" style="border-radius:16px;">
+                <div class="card-content">
+                  <figure class="image">
+                    <img src="asset/benchmarking.png" alt="Benchmarking results">
+                    <figcaption class="figure-caption">
+                      Speech-to-Text performance on spoken QA benchmark.
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide: Performance comparison -->
+            <div class="carousel-item performance-carousel-item">
+              <div class="card" style="border-radius:16px;">
+                <div class="card-content">
+                  <figure class="image">
+                    <img src="asset/performance.png" alt="Performance comparison">
+                    <figcaption class="figure-caption">
+                      Comparison of training data, parameters and performance. The number in node is the score evaluated
+                      Web Questions.
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide: Human evaluation -->
+            <div class="carousel-item performance-carousel-item">
+              <div class="card" style="border-radius:16px;">
+                <div class="card-content">
+                  <figure class="image">
+                    <img src="asset/human_eval.png" alt="Human evaluation results">
+                    <figcaption class="figure-caption">
+                      Human evaluation results.
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <button class="carousel-nav carousel-nav-left" id="performance-prev" aria-label="Previous performance">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <button class="carousel-nav carousel-nav-right" id="performance-next" aria-label="Next performance">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Pagination -->
+        <div class="carousel-pagination" id="performance-pagination" aria-label="Performance pagination">
+          <span class="carousel-dot active" data-slide="0"></span>
+          <span class="carousel-dot" data-slide="1"></span>
+          <span class="carousel-dot" data-slide="2"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance: Evaluation Results -->
+  <section class="section" id="performance-analysis">
+    <div class="container is-max-desktop">
+      <div class="content has-text-justified">
+        EchoX demonstrates exceptional performance on knowledge-based question answering, achieving strong results with
+        minimal training data and setting a new benchmark for efficiency in speech-to-speech language models.
+
+        <h5><strong>Key highlights</strong></h5>
+        <ul class="key-findings">
+          <li><strong>Efficiency</strong>: Matches or surpasses larger models with only 10k training hours.</li>
+          <li><strong>User Experience</strong>: Human evaluations confirm superior helpfulness, naturalness, and overall
+            satisfaction.</li>
+        </ul>
+
+        These results show EchoX bridges the acoustic–semantic gap while remaining efficient and user-friendly.
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="bibtex">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <p>If you use EchoX in your research or projects, please cite our paper:</p>
+      <pre><code style="font-family: Consolas, Menlo, Courier New, monospace;">
+@misc{2025echox,
+  title={EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs}, 
+  author={Yuhao Zhang and Yuhao Du and Zhanchen Dai and others},
+  year={2025},
+  eprint={<ARXIV PAPER ID>},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL}
+}
+    </code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Custom Carousel Implementation
+    class CustomCarousel {
+      constructor(wrapperId, paginationId, prevBtnId, nextBtnId) {
+        this.wrapper = document.getElementById(wrapperId);
+        this.pagination = document.getElementById(paginationId);
+        this.prevBtn = document.getElementById(prevBtnId);
+        this.nextBtn = document.getElementById(nextBtnId);
+        this.items = this.wrapper.querySelectorAll('.carousel-item');
+        this.currentIndex = 0;
+        this.autoplayInterval = null;
+
+        this.init();
+      }
+
+      init() {
+        this.updateCarousel();
+        this.bindEvents();
+        this.startAutoplay();
+      }
+
+      bindEvents() {
+        this.prevBtn.addEventListener('click', () => this.prev());
+        this.nextBtn.addEventListener('click', () => this.next());
+
+        this.pagination.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+          dot.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // Pause autoplay on hover
+        this.wrapper.addEventListener('mouseenter', () => this.stopAutoplay());
+        this.wrapper.addEventListener('mouseleave', () => this.startAutoplay());
+      }
+
+      updateCarousel() {
+        const translateX = -this.currentIndex * 100;
+        this.wrapper.style.transform = `translateX(${translateX}%)`;
+
+        // Update pagination
+        this.pagination.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === this.currentIndex);
+        });
+      }
+
+      next() {
+        this.currentIndex = (this.currentIndex + 1) % this.items.length;
+        this.updateCarousel();
+      }
+
+      prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+        this.updateCarousel();
+      }
+
+      goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+      }
+
+      startAutoplay() {
+        this.stopAutoplay();
+        this.autoplayInterval = setInterval(() => this.next(), 10000);
+      }
+
+      stopAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.autoplayInterval = null;
+        }
+      }
+    }
+
+    // Initialize carousels when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize approach carousel (no autoplay)
+      const approachCarousel = new CustomCarousel(
+        'approach-carousel-wrapper',
+        'approach-pagination',
+        'approach-prev',
+        'approach-next'
+      );
+
+      // Initialize performance carousel (no autoplay)
+      const performanceCarousel = new CustomCarousel(
+        'performance-carousel-wrapper',
+        'performance-pagination',
+        'performance-prev',
+        'performance-next'
+      );
+    });
+  </script>
+
+</body>
+
+</html>
