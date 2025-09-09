@@ -21,8 +21,7 @@
 ## Contents
 - [EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs](#echox-towards-mitigating-acoustic-semantic-gap-via-echo-training-for-speech-to-speech-llms)
   - [Contents](#contents)
-  - [Overview](#overview)
-  - [Method](#method)
+  - [Highlights](#highlights)
   - [Performance](#performance)
   - [Datasets and Models](#datasets-and-models)
     - [Dataset](#dataset)
@@ -34,32 +33,13 @@
   - [Citation](#citation)
   - [License](#license)
 
-## Overview
+## Highlights
 
-<p align="center">
-  <img src="asset/problem_figure.png" alt="Problem" style="width:90%;">
-</p>
-
-Current speech-to-speech language models face a fundamental challenge: while traditional LLMs excel at semantic alignment (aligning "Hello" and "Hi"), speech LLMs suffer from poor semantic understanding due to their focus on acoustic modeling. EchoX addresses this acoustic-semantic gap through a novel echo training approach that preserves both reasoning capabilities and speech generation quality.
-
-**Key Contributions:**
-- **Problem Identification**: Reveals the degraded reasoning and knowledge abilities in current speech LLMs due to conflicting acoustic learning demands.
-- **Echo Training Solution**: Integrates both acoustic and semantic learning by dynamically generating speech tokens from semantic representations, mitigating the degradation problem while preserving the reasoning abilities of LLMs.
-- **Efficient Performance**: Achieves state-of-the-art performance on knowledge-based question-answering tasks while requiring only 10k hours of training data.
-
-## Method
-
-<p align="center">
-  <img src="asset/method.png" alt="Method" style="width:80%;">
-</p>
-
-EchoX addresses the challenges of current speech-to-speech models by integrating both semantic and acoustic learning. We propose a novel three-stage training pipeline:
-
-1. **Stage I: Speech-to-Text (S2T)**: Converts speech to text, enabling the model to capture semantic information from spoken inputs.
-2. **Stage II: Text-to-Codec (T2C)**: Transforms text into speech tokens, bridging the gap between text-based LLMs and speech-based representations.
-3. **Stage III: Echo Training**: Combines the outputs of S2T and T2C stages, training the model to generate speech from semantic understanding while preserving the core language model's intelligence.
-
-This integrated approach ensures that EchoX preserves the reasoning abilities of LLMs while excelling at speech-based tasks.
+- Mitigates Acoustic-Semantic Gap in Speech-to-Speech LLMs
+- Introduces Echo Training with a Novel Three-Stage Pipeline (S2T, T2C, Echo)
+- Trained on Only 10k Hours of Curated Data, Ensuring Efficiency
+- Achieves State-of-the-Art Performance in Knowledge-Based QA Benchmarks
+- Preserves Reasoning and Knowledge Abilities for Interactive Speech Tasks
 
 ## Performance
 
