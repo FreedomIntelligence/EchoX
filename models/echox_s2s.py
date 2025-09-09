@@ -18,8 +18,8 @@ from .t2ullama_cr_online import T2ULlamaForCausalLM
 
 IGNORE_TOKEN_ID = LabelSmoother.ignore_index
 
-class ACLlamaConfig(LlamaConfig):
-    model_type = "ACLlama"
+class EchoXConfig(LlamaConfig):
+    model_type = "EchoX"
     
 def load_whisper(audio_tower_name, device="cuda"):
     model = WhisperModel.from_pretrained(
@@ -53,11 +53,11 @@ class LookBackModule(nn.Module):
         x = self.atten_layer_norm(x)
         return x
 
-class ACLlamaModel(LlamaModel):
-    config_class = ACLlamaConfig
+class EchoXModel(LlamaModel):
+    config_class = EchoXConfig
 
     def __init__(self, config: LlamaConfig):
-        super(ACLlamaModel, self).__init__(config)
+        super(EchoXModel, self).__init__(config)
 
         if hasattr(config, "audio_tower"):
             self.audio_tower = [load_whisper(config.audio_tower)]
@@ -261,7 +261,7 @@ class ACLlamaModel(LlamaModel):
         attention_mask=self.mask_tensor[:,:self.length]
         self.length+=1
         
-        return_state=super(ACLlamaModel, self).forward(
+        return_state=super(EchoXModel, self).forward(
             input_ids=None, attention_mask=attention_mask, past_key_values=past_key_values,
             inputs_embeds=inputs_embeds, use_cache=use_cache,
             output_attentions=output_attentions, output_hidden_states=output_hidden_states,
@@ -276,12 +276,12 @@ class ACLlamaModel(LlamaModel):
         return return_state 
 
 
-class ACLlamaForCausalLM(LlamaForCausalLM):
-    config_class = ACLlamaConfig
+class EchoXForCausalLM(LlamaForCausalLM):
+    config_class = EchoXConfig
 
     def __init__(self, config):
         super(LlamaForCausalLM, self).__init__(config)
-        self.model = ACLlamaModel(config)
+        self.model = EchoXModel(config)
 
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
 
@@ -561,5 +561,5 @@ class ACLlamaForCausalLM(LlamaForCausalLM):
         model_inputs.update({"return_dict": kwargs["return_dict_in_generate"]} if "return_dict_in_generate" in kwargs.keys() else {})
         return model_inputs
 
-AutoConfig.register("ACLlama", ACLlamaConfig)
-AutoModelForCausalLM.register(ACLlamaConfig, ACLlamaForCausalLM)
+AutoConfig.register("EchoX", EchoXConfig)
+AutoModelForCausalLM.register(EchoXConfig, EchoXForCausalLM)

@@ -1,5 +1,5 @@
 import sys
-from models.acllama_el_s2s import ACLlamaForCausalLM
+from models.echox_s2s import EchoXForCausalLM
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, AutoConfig, WhisperProcessor
 from peft import PeftModel, PeftConfig
 import json
@@ -29,7 +29,7 @@ def load_model(args, device):
     hf_token = os.getenv("HF_TOKEN")
     
     # load based model
-    model = ACLlamaForCausalLM.from_pretrained(
+    model = EchoXForCausalLM.from_pretrained(
         args.base_model_path,
         device_map=None,
         torch_dtype=torch.float16,
