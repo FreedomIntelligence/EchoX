@@ -5,7 +5,7 @@
 > 📄 [Paper (to be added)](https://arxiv.org/abs/XXXX.XXXX) -->
 
 <p align="center">
-  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  <img src="https://img.shields.io/badge/License-Apache2.0-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python">
   <img src="https://img.shields.io/badge/Model-8B%7C3B-orange.svg" alt="Model Size">
 </p>
@@ -139,4 +139,4 @@ If you use EchoX in your research or projects, please cite our paper:
 ```
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
