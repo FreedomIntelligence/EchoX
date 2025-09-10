@@ -104,11 +104,11 @@
     }
 
     .carousel-nav-left {
-      left: 80px;
+      left: 20px;
     }
 
     .carousel-nav-right {
-      right: 80px;
+      right: 20px;
     }
 
     /* Pagination dots */
@@ -152,6 +152,8 @@
     .audio-demo-card .card-header-title {
       font-weight: 600;
       color: #2c3e50;
+      text-align: center;
+      justify-content: center;
     }
 
     .audio-demo-card .card-content {
@@ -160,13 +162,14 @@
       flex-direction: column;
       gap: 1rem;
       padding: 1rem;
+      background: #f8f9fa;
     }
 
     .audio-item {
-      background: #ffffff;
-      border: 1px solid #e1e5e9;
-      border-radius: 8px;
-      padding: 1rem;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
     }
 
     .audio-item-title {
@@ -178,17 +181,16 @@
 
     .audio-controls {
       width: 100%;
-      margin-bottom: 0.75rem;
+      /* margin-bottom: 0.75rem; */
     }
 
     .transcript-container {
       position: relative;
       height: 160px;
-      /* 默认高度保持不变 */
       overflow: hidden;
-      border-radius: 6px;
-      background: #f8f9fa;
-      border: 1px solid #e9ecef;
+      border-radius: 0;
+      background: transparent;
+      border: none;
     }
 
     /* 为Speech Input设置较小的高度 */
@@ -204,7 +206,7 @@
     .transcript-content {
       height: 100%;
       overflow-y: auto;
-      padding: 0.75rem;
+      padding: 30px 0 30px 0;
       font-size: 0.85rem;
       line-height: 1.4;
       color: #495057;
@@ -222,19 +224,19 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 10px;
+      height: 30px;
       pointer-events: none;
       z-index: 2;
     }
 
     .transcript-container::before {
       top: 0;
-      background: linear-gradient(to bottom, #f8f9fa, transparent);
+      background: linear-gradient(to bottom, #f8f9fa 0%, rgba(248, 249, 250, 0.8) 50%, transparent 100%);
     }
 
     .transcript-container::after {
       bottom: 0;
-      background: linear-gradient(to top, #f8f9fa, transparent);
+      background: linear-gradient(to top, #f8f9fa 0%, rgba(248, 249, 250, 0.8) 50%, transparent 100%);
     }
 
     /* Approach carousel specific styling */
@@ -372,7 +374,7 @@
               Yuhao Zhang&nbsp;&nbsp;
               Yuhao Du&nbsp;&nbsp;
               Zhanchen Dai&nbsp;&nbsp;
-              Xiangnan Ma<br>
+              Xiangnan Ma&nbsp;&nbsp;
               Kaiqi Kou&nbsp;&nbsp;
               Benyou Wang<sup>*</sup>&nbsp;&nbsp;
               Haizhou Li
@@ -400,7 +402,8 @@
             </div>
 
             <div class="column has-text-centered">
-              <div class="publication-links">
+              <div class="publication-links"
+                style="display: flex; justify-content: center; gap: 0.5em; flex-wrap: wrap;">
                 <span class="link-block">
                   <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">

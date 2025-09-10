@@ -21,7 +21,7 @@
 ## Contents
 - [EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs](#echox-towards-mitigating-acoustic-semantic-gap-via-echo-training-for-speech-to-speech-llms)
   - [Contents](#contents)
-  - [Highlights](#highlights)
+  - [Key Features](#key-features)
   - [Performance](#performance)
   - [Datasets and Models](#datasets-and-models)
     - [Dataset](#dataset)
@@ -33,8 +33,7 @@
   - [Citation](#citation)
   - [License](#license)
 
-## Highlights
-
+## Key Features
 - Mitigates Acoustic-Semantic Gap in Speech-to-Speech LLMs
 - Introduces Echo Training with a Novel Three-Stage Pipeline (S2T, T2C, Echo)
 - Trained on Only 10k Hours of Curated Data, Ensuring Efficiency
