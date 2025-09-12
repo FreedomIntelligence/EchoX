@@ -36,7 +36,7 @@
 ## Key Features
 - Mitigates Acoustic-Semantic Gap in Speech-to-Speech LLMs
 - Introduces Echo Training with a Novel Three-Stage Pipeline (S2T, T2C, Echo)
-- Trained on Only 10k Hours of Curated Data, Ensuring Efficiency
+- Trained on Only 6k Hours of Curated Data, Ensuring Efficiency
 - Achieves State-of-the-Art Performance in Knowledge-Based QA Benchmarks
 - Preserves Reasoning and Knowledge Abilities for Interactive Speech Tasks
 
@@ -69,8 +69,8 @@ The following pre-trained models are available for download:
 
 | Model        | Parameters | Training Data | Download Link                                      |
 | ------------ | ---------- | ------------- | -------------------------------------------------- |
-| **EchoX-3B** | 3 billion  | 10k hours     | [EchoX-3B Model](https://huggingface.co/FreedomIntelligence/EchoX-3B) |
-| **EchoX-8B** | 8 billion  | 10k hours     | [EchoX-8B Model](https://huggingface.co/FreedomIntelligence/EchoX-8B) |
+| **EchoX-3B** | 3 billion  | 6k hours     | [EchoX-3B Model](https://huggingface.co/FreedomIntelligence/EchoX-3B) |
+| **EchoX-8B** | 8 billion  | 6k hours     | [EchoX-8B Model](https://huggingface.co/FreedomIntelligence/EchoX-8B) |
 
 ## Quickstart
 
