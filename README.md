@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-   📄 <a href="https://arxiv.org/abs/XXXX.XXXX">Paper</a> |
+   📄 <a href="https://arxiv.org/abs/2509.09174">Paper</a> |
    📦 <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B">Model</a> | 🚀 
   <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX"> HF Space</a> | 🌐 
   <a href="https://freedomintelligence.github.io/EchoX">Web Demo</a>
@@ -115,12 +115,14 @@ CUDA_VISIBLE_DEVICES=1 python app.py
 If you use EchoX in your research or projects, please cite our paper:
 
 ```bibtex
-@inproceedings{zhang2026echox,
-  title={EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs},
-  author={Zhang, Yuhao and Du, Yuhao and Dai, Zhanchen and others},
-  booktitle={Proceedings of ICLR 2026},
-  year={2026},
-  url={https://arxiv.org/abs/XXXX.XXXX}
+@misc{zhang2025echoxmitigatingacousticsemanticgap,
+      title={EchoX: Towards Mitigating Acoustic-Semantic Gap via Echo Training for Speech-to-Speech LLMs}, 
+      author={Yuhao Zhang and Yuhao Du and Zhanchen Dai and Xiangnan Ma and Kaiqi Kou and Benyou Wang and Haizhou Li},
+      year={2025},
+      eprint={2509.09174},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2509.09174}, 
 }
 ```
 
