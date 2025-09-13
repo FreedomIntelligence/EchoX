@@ -12,10 +12,13 @@
 
 <p align="center">
    📄 <a href="https://arxiv.org/abs/2509.09174">Paper</a> |
-   📦 <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B">Model</a> | 🚀 
-  <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX"> HF Space</a> | 🌐 
-  <a href="https://freedomintelligence.github.io/EchoX">Web Demo</a>
+   📦 <a href="https://huggingface.co/FreedomIntelligence/EchoX-8B">Model</a> | 
+   🚀 <a href="https://huggingface.co/spaces/FreedomIntelligence/EchoX">HF Space</a> | 
+   🌐 <a href="https://freedomintelligence.github.io/EchoX">Web Demo</a> | 
+   📊 <a href="https://huggingface.co/datasets/FreedomIntelligence/EchoX-Dialougues">EchoX-Dialougues</a> | 
+   📊 <a href="https://huggingface.co/datasets/KurtDu/EchoX-Dialogues-Plus">EchoX-Dialogues-Plus</a>
 </p>
+
 
 
 ## Contents
