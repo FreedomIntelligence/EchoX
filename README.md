@@ -92,8 +92,8 @@ Download the models to this repository directory using the following commands:
 
 ```bash
 pip install -U huggingface_hub
-hf download --resume-download FreedomIntelligence/EchoX-8B --local-dir EchoX-8B
-hf download --resume-download openai/whisper-large-v3 --local-dir whisper-large-v3
+huggingface-cli download --resume-download FreedomIntelligence/EchoX-8B --local-dir EchoX-8B
+huggingface-cli download --resume-download openai/whisper-large-v3 --local-dir whisper-large-v3
 ```
 
 **Note**: If the models are downloaded to a different location, please update the model directory paths in [inference/echox_stream.py](inference/echox_stream.py) accordingly.
