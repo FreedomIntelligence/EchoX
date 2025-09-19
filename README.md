@@ -96,7 +96,7 @@ huggingface-cli download --resume-download FreedomIntelligence/EchoX-8B --local-
 huggingface-cli download --resume-download openai/whisper-large-v3 --local-dir whisper-large-v3
 ```
 
-**Note**: If the models are downloaded to a different location, please update the model directory paths in [inference/echox_stream.py](inference/echox_stream.py) accordingly.
+**Note**: If the models are downloaded to a different location or 3B version is used, please update the model directory paths in [inference/echox_stream.py](inference/echox_stream.py) and {your_EchoX_weight_directory}/config.json accordingly.
 
 ### Inference
 Run inference on a test case:
