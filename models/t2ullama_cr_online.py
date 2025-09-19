@@ -62,7 +62,6 @@ class T2ULlamaForCausalLM(LlamaForCausalLM):
         llama_config.pad_token_id = self.pad_token_id
         llama_config.vocab_size += llama_config.unit_vocab_size
         #######################################################
-        llama_config.unit_model = "medium"
         llama_config.max_position_embeddings = 2048     # 1024 1536 2048       # origin 1024 reduced 512
         #######################################################
         if hasattr(llama_config, "unit_model"):
@@ -73,7 +72,7 @@ class T2ULlamaForCausalLM(LlamaForCausalLM):
                 # llama_config.intermediate_size = 14336
                 # llama_config.head_dim = llama_config.hidden_size // llama_config.num_attention_heads
 
-            elif llama_config.unit_model == "tiny":
+            elif llama_config.unit_model == "small":
                 llama_config.num_hidden_layers = 4
                 llama_config.hidden_size = 512
                 llama_config.num_attention_heads = 8
